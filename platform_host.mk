@@ -19,5 +19,7 @@ else
         HOST_ARCH = x86
     else ifneq ($(findstring arm, $(UNAME_M)),)
         HOST_ARCH = arm
+    else ifneq ($(findstring arm64, $(UNAME_M)),)
+        HOST_ARCH = arm64
     endif
 endif

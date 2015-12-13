@@ -19,6 +19,9 @@ else ifeq ($(TARGET_ARCH),x64)
 else ifeq ($(TARGET_ARCH),arm)
 	GOARCH = arm
 	GOARM = 6
+else ifeq ($(TARGET_ARCH),arm64)
+	GOARCH = arm64
+	GOARM = 6
 endif
 
 ifeq ($(TARGET_OS), windows)
@@ -43,11 +46,11 @@ else ifeq ($(TARGET_OS), android)
 endif
 
 NAME = pulsar
-GO_PKG = github.com/steeve/pulsar
+GO_PKG = github.com/hypernurb/pulsar
 GO = go
 GIT = git
 DOCKER = docker
-DOCKER_IMAGE = steeve/pulsar
+DOCKER_IMAGE = hypernurb/pulsar
 UPX = upx
 GIT_VERSION = $(shell $(GIT) describe --always)
 VERSION = $(shell cat VERSION)
@@ -55,11 +58,11 @@ ZIP_FILE = $(ADDON_NAME)-$(VERSION).zip
 CGO_ENABLED = 1
 OUTPUT_NAME = $(NAME)$(EXT)
 BUILD_PATH = build/$(TARGET_OS)_$(TARGET_ARCH)
-LIBTORRENT_GO = github.com/steeve/libtorrent-go
+LIBTORRENT_GO = github.com/hypernurb/libtorrent-go
 LIBTORRENT_GO_HOME = $(shell go env GOPATH)/src/$(LIBTORRENT_GO)
 GO_BUILD_TAGS =
 GO_LDFLAGS += -w -X $(GO_PKG)/util.Version "$(VERSION)" -X $(GO_PKG)/util.GitCommit "$(GIT_VERSION)"
-PLATFORMS = darwin-x64 windows-x86 linux-x86 linux-x64 linux-arm android-arm
+PLATFORMS = darwin-x64 windows-x86 linux-x86 linux-x64 linux-arm android-arm64 android-arm
 
 force:
 	@true
@@ -139,3 +142,4 @@ alldist: force
 	$(MAKE) build TARGET_OS=linux TARGET_ARCH=arm MARGS="dist"
 	$(MAKE) build TARGET_OS=windows TARGET_ARCH=x86 MARGS="dist"
 	$(MAKE) build TARGET_OS=android TARGET_ARCH=arm MARGS="dist"
+	$(MAKE) build TARGET_OS=android TARGET_ARCH=arm64 MARGS="dist"

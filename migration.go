@@ -6,8 +6,8 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/steeve/pulsar/config"
-	"github.com/steeve/pulsar/repository"
+	"github.com/hypernurb/pulsar/config"
+	"github.com/hypernurb/pulsar/repository"
 )
 
 func Migrate() {
